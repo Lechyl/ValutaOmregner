@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ComboData.cs" />
     <Compile Include="KursAPI.cs" />
     <Compile Include="Kurser.cs" />
     <Compile Include="RealtimeUpdate.cs" />

@@ -21,11 +21,7 @@ namespace ValutaOmregner
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    public class ComboData
-    {
-        public string Text { get; set; }
-        public double Value { get; set; }
-    }
+
     public partial class MainWindow : Window
     {
         List<Kurser> Kurser;
