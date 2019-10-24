@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <TextBox TextChanged="Textbox1_TextChanged" x:Name="Textbox1" HorizontalAlignment="Left" Height="23" Margin="197,192,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" PreviewTextInput="NumberValidationTextBox" />
+        <ComboBox x:Name="Combobox1" HorizontalAlignment="Left" Margin="197,153,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="Combobox2" HorizontalAlignment="Left" Margin="464,153,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox TextChanged="Textbox1_TextChanged_1" x:Name="Textbox2" HorizontalAlignment="Left" Height="23" Margin="464,192,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" PreviewTextInput="NumberValidationTextBox"/>
+
     </Grid>
 </Window>
