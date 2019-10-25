@@ -33,7 +33,9 @@ namespace ValutaOmregner
         }
         public void PopulateComboboxes()
         {
+            //Instanciate object
             KursAPI kurs = new KursAPI();
+            //input GET method path to request data
             Kurser = kurs.GetProductAsync("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=da");
 
             List<ComboData> items = new List<ComboData>();
@@ -44,7 +46,7 @@ namespace ValutaOmregner
                 //MessageBox.Show(item.getDesc());
                 // this.Combobox1.Items.Add(new KeyValuePair<string, int>("0", 0));
 
-                items.Add(new ComboData { Text = item.getDesc() , Value = item.getRate() });
+                items.Add(new ComboData { Text = item.getDesc(), Value = item.getRate() });
             }
 
             //Populate combobox 1
@@ -62,24 +64,95 @@ namespace ValutaOmregner
         }
         private void Textbox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
-            //realtimeUpdate.ValutaOmregner(Convert.ToInt16(Textbox1.Text),Convert.ToInt16(Combobox1.SelectedItem), Convert.ToInt16(Combobox2.SelectedItem));
+            if (this.IsLoaded)
+            {
+                //   MessageBox.Show(Textbox1.Text +" "+ Combobox1.SelectedValue);
+                changedStateForValuta(1);
+
+            }
+
 
         }
 
         private void Textbox1_TextChanged_1(object sender, TextChangedEventArgs e)
         {
-            RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
-            //realtimeUpdate.ValutaOmregner(Convert.ToInt16(Textbox2.Text),Convert.ToInt16(Combobox2.SelectedItem), Convert.ToInt16(Combobox1.SelectedItem));
+            if (this.IsLoaded)
+            {
+                //   MessageBox.Show(Textbox1.Text +" "+ Combobox1.SelectedValue);
+                changedStateForValuta(2);
+            }
         }
 
 
-
-
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-    {
-        Regex regex = new Regex("[^0-9]+");
-        e.Handled = regex.IsMatch(e.Text);
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+
+        }
+
+        private void Combobox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                changedStateForValuta(1);
+
+            }
+        }
+
+        private void Combobox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                changedStateForValuta(2);
+
+            }
+
+        }
+
+        private void changedStateForValuta(int i)
+        {
+            if(i == 1)
+            {
+ 
+                double nyValuta = 0;
+                if (Textbox1.Text != "")
+                {
+                    RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
+
+                    nyValuta = realtimeUpdate.ValutaOmregner(Convert.ToDouble(Textbox1.Text), Convert.ToDouble(Combobox1.SelectedValue), Convert.ToDouble(Combobox2.SelectedValue));
+
+                }
+
+                Textbox2.TextChanged -= Textbox1_TextChanged_1;
+
+                Textbox2.Text = nyValuta.ToString();
+
+                Textbox2.TextChanged += Textbox1_TextChanged_1;
+
+            }
+            else if (i == 2)
+            {
+
+                double nyValuta = 0;
+                if (Textbox2.Text != "")
+                {
+                    RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
+
+                    nyValuta = realtimeUpdate.ValutaOmregner(Convert.ToDouble(Textbox2.Text), Convert.ToDouble(Combobox2.SelectedValue), Convert.ToDouble(Combobox1.SelectedValue));
+
+                }
+                Textbox1.TextChanged -= Textbox1_TextChanged;
+
+                Textbox1.Text = nyValuta.ToString();
+                Textbox1.TextChanged += Textbox1_TextChanged;
+
+
+            }
+            else
+            {
+                MessageBox.Show("ERROR 403");
+            }
+        }
     }
-}
 }
