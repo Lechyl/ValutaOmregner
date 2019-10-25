@@ -86,13 +86,16 @@ namespace ValutaOmregner
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-
+               //This event trigger right before you input data into textbox
+            //For Decimal
+            Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+            e.Handled = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
         }
 
         private void Combobox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //If Page is loaded
+
             if (this.IsLoaded)
             {
                 changedStateForValuta(1);
@@ -102,6 +105,7 @@ namespace ValutaOmregner
 
         private void Combobox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //If Page is loaded
             if (this.IsLoaded)
             {
                 changedStateForValuta(2);
@@ -116,13 +120,15 @@ namespace ValutaOmregner
             {
  
                 double nyValuta = 0;
+                //Check if Textbox is empty 
                 if (Textbox1.Text != "")
                 {
                     RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
-
+                    //Calculate Valuta
                     nyValuta = realtimeUpdate.ValutaOmregner(Convert.ToDouble(Textbox1.Text), Convert.ToDouble(Combobox1.SelectedValue), Convert.ToDouble(Combobox2.SelectedValue));
 
                 }
+                //Because the Changed Event trigger everytime you input or change in textbox you have to disable the event before inputting valuta data to not Calculate the Valuta again.
 
                 Textbox2.TextChanged -= Textbox1_TextChanged_1;
 
@@ -138,10 +144,11 @@ namespace ValutaOmregner
                 if (Textbox2.Text != "")
                 {
                     RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
-
+                    //Calculate Valuta
                     nyValuta = realtimeUpdate.ValutaOmregner(Convert.ToDouble(Textbox2.Text), Convert.ToDouble(Combobox2.SelectedValue), Convert.ToDouble(Combobox1.SelectedValue));
 
                 }
+                //Because the Changed Event trigger everytime you input or change in textbox you have to disable the event before inputting valuta data to not Calculate the Valuta again.
                 Textbox1.TextChanged -= Textbox1_TextChanged;
 
                 Textbox1.Text = nyValuta.ToString();

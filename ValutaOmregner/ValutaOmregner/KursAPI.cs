@@ -15,19 +15,24 @@ namespace ValutaOmregner
         public List<Kurser> GetProductAsync(string path)
         {
             List<Kurser> kursers = new List<Kurser>();
-            String URLString = path;
+            string URLString = path;
+            //Call Request with GET Method
             XmlTextReader reader = new XmlTextReader(URLString);
 
             while (reader.Read())
             {
+                //Check if element contain this attribute
                 if (reader.GetAttribute("code") != null)
                 {
                     //MessageBox.Show(reader.GetAttribute("code") + reader.GetAttribute("desc") + reader.GetAttribute("rate"));
+                    //Get the attributes of elements
+                    string code = reader.GetAttribute("code");
+                    string desc = reader.GetAttribute("desc");
+                    string rate = reader.GetAttribute("rate").ToString();
 
-                    string one = reader.GetAttribute("code");
-                    string two = reader.GetAttribute("desc");
-                    string three = reader.GetAttribute("rate").ToString();
-                    Kurser kurser = new Kurser(one,two,double.Parse(three));
+                    //Create new instance object
+                    Kurser kurser = new Kurser(code,desc,double.Parse(rate));
+                    //Add the new instance of object to the Collection/List of Object
                     kursers.Add(kurser);
                 }
 
