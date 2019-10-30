@@ -121,7 +121,7 @@ namespace ValutaOmregner
  
                 double nyValuta = 0;
                 //Check if Textbox is empty 
-                if (Textbox1.Text != "")
+                if (Textbox1.Text != "" || Textbox1.Text != ".")
                 {
                     RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
                     //Calculate Valuta
@@ -129,11 +129,11 @@ namespace ValutaOmregner
 
                 }
                 //Because the Changed Event trigger everytime you input or change in textbox you have to disable the event before inputting valuta data to not Calculate the Valuta again.
-
+                //Disable
                 Textbox2.TextChanged -= Textbox1_TextChanged_1;
 
                 Textbox2.Text = nyValuta.ToString();
-
+                //Enable
                 Textbox2.TextChanged += Textbox1_TextChanged_1;
 
             }
@@ -141,7 +141,7 @@ namespace ValutaOmregner
             {
 
                 double nyValuta = 0;
-                if (Textbox2.Text != "")
+                if (Textbox2.Text != "" || Textbox2.Text != "")
                 {
                     RealtimeUpdate realtimeUpdate = new RealtimeUpdate();
                     //Calculate Valuta
@@ -149,9 +149,11 @@ namespace ValutaOmregner
 
                 }
                 //Because the Changed Event trigger everytime you input or change in textbox you have to disable the event before inputting valuta data to not Calculate the Valuta again.
+                //Disable
                 Textbox1.TextChanged -= Textbox1_TextChanged;
 
                 Textbox1.Text = nyValuta.ToString();
+                //Enable
                 Textbox1.TextChanged += Textbox1_TextChanged;
 
 
